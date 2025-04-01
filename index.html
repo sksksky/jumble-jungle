@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Game Home Page</title>
+        <style>
+            body {
+            font-family: monospace;
+            text-align: center;
+            margin: 50px;
+            background-image: url('jungle.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid #ccc;
+            border-radius: 10px;
+        }
+            input {
+                padding: 10px;
+                margin: 10px 0;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>Jumble Jungle</h1>
+            <p>This is a fun and engaging game where you must follow the given mechanics to score points.</p>
+            <p>Rules:
+                <ul>
+                    <li>Follow the game instructions carefully.</li>
+                </ul>
+            </p>
+            <p id="greeting"></p>
+            <form id="usernameForm">
+                <label for="username">Enter your username:</label>
+                <input type="text" id="username" name="username">
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+
+        <script>
+            function setCookie(name, value, days) {
+                let expires = "";
+                if (days) {
+                    let date = new Date();
+                    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                    expires = "; expires=" + date.toUTCString();
+                }
+                document.cookie = name + "=" + value + expires + "; path=/";
+            }
+
+            function getCookie(name) {
+                let nameEQ = name + "=";
+                let ca = document.cookie.split(';');
+                for(let i = 0; i < ca.length; i++) {
+                    let c = ca[i];
+                    while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+                    if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+                }
+                return null;
+            }
+
+            document.getElementById("usernameForm").addEventListener("submit", function(event) {
+                event.preventDefault();
+                let username = document.getElementById("username").value;
+                setCookie("username", username, 1);
+                location.reload();
+            });
+
+            let storedUsername = getCookie("username");
+            if (storedUsername) {
+                document.getElementById("greeting").innerText = "Welcome back, " + storedUsername + "!";
+            }
+        </script>
+    </body>
+</html>
